@@ -7,7 +7,7 @@ from config import *
 class Ball(GameObject):
     def __init__(self, scene, player: GameObject) -> None:
         super().__init__(scene)
-        self.speed = 20
+        self.speed = 16
         self.velocity = [0,0]
         self.launched = False
         self.player = player

@@ -26,14 +26,17 @@ class GameScene(Scene):
 
     def obstacle_generator(self, world_borders_scale: vec2) -> list[GameObject]:
         obstacles = []
-        scale_x = world_borders_scale[0] / 20
-        scale_y = world_borders_scale[1] / 14
-        y =  (0 + world_borders_scale[1]) / 2 - scale_y / 2 - 0.1
-        while y > 0:
-            x = (0 - world_borders_scale[0]) / 2 + scale_x / 2 + 0.1
-            while x < (0 + world_borders_scale[0]) / 2:
+        gap = 0.5
+        border_gap = 2
+        scale_x = 3
+        scale_y = 0.8
+        y = 0
+        while y < (world_borders_scale[1] - scale_y)/2 - border_gap:
+            x = (scale_x + gap) / 2
+            while x < (world_borders_scale[0] - scale_x) / 2 - border_gap:
                 obstacles.append(Obstacle(scene = self, scale=[scale_x, scale_y],  position=[x,y]))
-                x += scale_x + 0.2
-            y -= scale_y + 0.1
+                obstacles.append(Obstacle(scene = self, scale=[scale_x, scale_y],  position=[-x,y]))
+                x += scale_x + gap
+            y += scale_y + gap
         return obstacles
 

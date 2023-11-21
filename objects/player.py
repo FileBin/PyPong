@@ -9,8 +9,8 @@ class Player(GameObject):
     def __init__(self, scene, borders: GameObject) -> None:
         super().__init__(scene)
         self.scale = [3, 0.4]
-        self.position = [0, -9]
-        self.speed = 12
+        self.position = [0, -0.45 * borders.scale[1]]
+        self.speed = 16
         self.tag = PLAYER_TAG
         self.enable_collision = True
         self.borders = borders
