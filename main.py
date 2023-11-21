@@ -6,16 +6,22 @@ from pypongengine import PyPongEngine
 
 from objects.world_borders import WorldBorders
 from objects.player import Player
+from objects.ball import Ball
+
+from scenes.gamescene import GameScene
 
 class ExampleScene(Scene):
     def reset(self, engine) -> None:
         super().reset(engine)
+        player = Player(scene=self)
+
         self.objects = [
-            Player(scene=self),
-            WorldBorders(scene=self)
+            player,
+            WorldBorders(scene=self),
+            Ball(scene=self, player=player),
         ]
 
 if __name__=="__main__":
     engine = PyPongEngine()
-    engine.init(ExampleScene())
+    engine.init(GameScene())
     engine.run_sync()

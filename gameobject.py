@@ -10,6 +10,7 @@ class GameObject:
         self.scale: vec2 = [1, 1]
         from scene import Scene
         self.scene : Scene = scene
+        self.tag = ''
 
     def update(self, dt: float) -> None:
         pass
