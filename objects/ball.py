@@ -41,16 +41,18 @@ class Ball(GameObject):
             
             pos = self.position
 
-            phys_step = vec2(x*ball_radius for x in normalize(self.velocity))
+            direction = normalize(self.velocity)
 
             collision = False
 
             dist, nearestObject = sdf_o(pos)
             while(dist - ball_radius < step_distance):
                 if(dist > ball_radius):
-                    pos = list(map(add, pos, phys_step))
+
+                    phys_step = max(ball_radius*0.5, dist - ball_radius)
+                    pos = list(map(add, pos, vec2(n*phys_step for n in direction)))
                     dist, nearestObject = sdf_o(pos)
-                    step_distance -= ball_radius
+                    step_distance -= phys_step
                 else:
                     collision = True 
                     break
