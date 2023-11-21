@@ -5,9 +5,9 @@ from utils import *
 from config import OBSTACLE_TAG
 
 class Obstacle(GameObject):
-    def __init__(self, scene, position) -> None:
+    def __init__(self, scene, scale, position) -> None:
         super().__init__(scene)
-        self.scale =  [0.5, 0.4]
+        self.scale =  [2, 1.5]
         self.position = position
         self.color = [r.randint(0, 150), r.randint(0, 150), r.randint(0, 150)]
         self.enable_collision = True
