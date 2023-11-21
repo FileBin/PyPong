@@ -48,7 +48,9 @@ class Ball(GameObject):
                     if(normal[1] > 0):
                        self.calculate_velocity_from_player()
                 else:
-                    if(nearestObject.tag == WORLDBORDER_TAG):
+                    if nearestObject.tag == OBSTACLE_TAG:
+                        nearestObject.active = False
+                    elif nearestObject.tag == WORLDBORDER_TAG:
                         if(normal[1] > 0.5):
                             # ball hit bottom wall
                             from scenes.gamescene import GameScene 

@@ -6,7 +6,7 @@ from config import WORLDBORDER_TAG
 class WorldBorders(GameObject):
     def __init__(self, scene) -> None:
         super().__init__(scene)
-        self.scale = [20, 20]
+        self.scale = [36, 20]
         self.is_wireframe = True
         self.drawcolor=pg.Color('#000000')
         self.enable_collision = True
