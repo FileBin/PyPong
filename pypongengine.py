@@ -51,11 +51,9 @@ class PyPongEngine:
                 if o.visible:
                     windowpos = self.active_scene.point_worldspace_to_windowspace(self.screen, o.position)
                     windowscale = self.active_scene.vector_worldspace_to_windowspace(self.screen, o.scale)
-                    windowpos = tuple(x - y/2 for x, y in zip(windowpos, windowscale))
-                    if not o.is_wireframe:
-                        pg.draw.rect(surface=self.screen, color=o.drawcolor, rect=pg.Rect(windowpos, windowscale))
-                    else:
-                        pg.draw.rect(surface=self.screen, color=o.drawcolor, rect=pg.Rect(windowpos, windowscale), width=2)
+                    windowpos = tuple(x - y/2 for x, y in zip(windowpos, windowscale)) 
+                    drawrect=pg.Rect(windowpos, windowscale)
+                    o.draw(self.screen, drawrect)
 
     def change_scene(self, scene: Scene):
         self.scene_to_load = scene
