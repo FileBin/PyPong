@@ -1,26 +1,18 @@
 #!/usr/bin/env python3
 import pygame as pg, math
 from config import *
+from scene import Scene
+from player import Player
+from pypongengine import PyPongEngine
 
-
+class ExampleScene(Scene):
+    def reset(self, engine) -> None:
+        super().reset(engine)
+        self.objects = [
+            Player(scene=self)
+        ]
 
 if __name__=="__main__":
-    # Used to manage how fast the screen updates
-    pg.init()
-    screen=pg.display.set_mode(WINDOW_DEFAULT_SIZE, pg.RESIZABLE)
-    pg.display.set_caption(WINDOW_CAPTION)
-    
-    clock=pg.time.Clock()
-    done=False
-
-    while done==False:
-        for event in pg.event.get(): # User did something
-            if event.type == pg.QUIT: # If user clicked close
-                done=True # Flag that we are done so we exit this loop
-        
-        dt = clock.tick(FPS)
-        screen.fill([0,0,0])
-
-        # Swap draw buffers
-        pg.display.flip()
-    pg.quit ()
+    engine = PyPongEngine()
+    engine.init(ExampleScene())
+    engine.run_sync()
