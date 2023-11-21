@@ -29,24 +29,40 @@ class Ball(GameObject):
             self.position = [lerp(x, y, 0.2) for x, y in zip(self.position, target_position)]
         
         else:
+            ball_radius = max(self.scale) * 0.5
             colliders = [x for x in self.scene.objects if x.active and x.enable_collision]
+            step_distance = self.speed * dt
+            
             def sdf_o(p: vec2):
                 return min(list((c.sdf(p), c) for c in colliders), key=lambda t: t[0])
             
             def sdf(p: vec2):
                 return sdf_o(p)[0]
             
-            ball_radius = max(self.scale) * 0.5
+            pos = self.position
 
-            dist, nearestObject = sdf_o(self.position)
-            if(dist < ball_radius): # collision happens
-                #offset = ball_radius - dist
-                #offset = [x * offset for x in normalize(self.velocity)]
-                #self.position = list(map(sub, self.position, offset))
+            direction = normalize(self.velocity)
+
+            collision = False
+
+            dist, nearestObject = sdf_o(pos)
+            while(dist - ball_radius < step_distance):
+                if(dist > ball_radius):
+
+                    phys_step = max(ball_radius*0.5, dist - ball_radius)
+                    pos = list(map(add, pos, vec2(n*phys_step for n in direction)))
+                    dist, nearestObject = sdf_o(pos)
+                    step_distance -= phys_step
+                else:
+                    collision = True 
+                    break
+
+            if(collision): # collision happens
+                self.position = pos
                 normal = normal_sdf(sdf, self.position)
                 if(nearestObject.tag == PLAYER_TAG):
                     if(normal[1] > 0):
-                       self.calculate_velocity_from_player()
+                        self.calculate_velocity_from_player()
                 else:
                     if nearestObject.tag == OBSTACLE_TAG:
                         nearestObject.active = False
@@ -56,9 +72,9 @@ class Ball(GameObject):
                             from scenes.gamescene import GameScene 
                             self.scene.engine.change_scene(GameScene())
 
-                    self.velocity = list(reflect(self.velocity, normal))             
+                    self.velocity = list(reflect(self.velocity, normal))
 
-            self.position = [x + y * dt for x, y in zip(self.position, self.velocity)]
+            self.position = [x + y * dt for x, y in zip(self.position, self.velocity)]                  
 
     def calculate_velocity_from_player(self):
             target_position = list(self.player.position)
