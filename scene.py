@@ -14,7 +14,9 @@ class Scene:
     def point_worldspace_to_windowspace(self, screen: pg.Surface, point: vec2) -> tuple[int, int]:
         windowsize = screen.get_size()
         min_dim = min(windowsize)
-        aspect = (x / min_dim for x in windowsize)
+        
+        aspect = [x / min_dim for x in windowsize]
+        aspect[1] *= -1
 
         point = (x / self.unit_scale for x in point) # convert units to (-1..+1) range
         point = (x / y for x, y in zip(point, aspect)) # correct aspect ratio 
@@ -25,7 +27,8 @@ class Scene:
     def vector_worldspace_to_windowspace(self, screen: pg.Surface, point: vec2) -> tuple[int, int]:
         windowsize = screen.get_size()
         min_dim = min(windowsize)
-        aspect = (x / min_dim for x in windowsize)
+        
+        aspect = [x / min_dim for x in windowsize]
 
         point = (x * 0.5 / self.unit_scale for x in point) # convert units to (-1..+1) range
         point = (x / y for x, y in zip(point, aspect)) # correct aspect ratio 

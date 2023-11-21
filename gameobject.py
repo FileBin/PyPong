@@ -9,6 +9,7 @@ class GameObject:
         self.position: vec2 = [0, 0]
         self.scale: vec2 = [1, 1]
         self.drawcolor = pg.Color([0,0,0])
+        self.is_wireframe = False
         from scene import Scene
         self.scene : Scene = scene
 
