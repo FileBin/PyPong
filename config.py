@@ -2,7 +2,7 @@ import pygame as pg
 
 WINDOW_DEFAULT_SIZE = [1280,720]
 WINDOW_CAPTION = "PyPong"
-FPS = 60
+FPS = 144
 
 BG_COLOR='#02ed8f'
 

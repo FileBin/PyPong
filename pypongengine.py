@@ -33,6 +33,8 @@ class PyPongEngine:
                 self.active_scene.reset(self)
 
             dt = self.clock.tick(FPS)*0.001
+            dt = min(dt, 0.3)
+
             self.inputsystem.read_input()
             
             self.screen.fill(pg.Color(BG_COLOR))

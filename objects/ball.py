@@ -26,7 +26,7 @@ class Ball(GameObject):
                 self.launched = True
                 return
 
-            self.position = [lerp(x, y, 0.2) for x, y in zip(self.position, target_position)]
+            self.position = [lerp(x, y, 1 - pow(1 - 0.2, dt * 60)) for x, y in zip(self.position, target_position)]
         
         else:
             ball_radius = max(self.scale) * 0.5
@@ -77,9 +77,8 @@ class Ball(GameObject):
                             # ball hit bottom wall
                             from scenes.gamescene import GameScene 
                             self.scene.engine.change_scene(GameScene())
-
-                    self.velocity = list(reflect(self.velocity, normal))
-
+                    if dot(self.velocity, normal) < 0:
+                        self.velocity = list(reflect(self.velocity, normal))
             self.position = [x + y * dt for x, y in zip(self.position, self.velocity)]                  
 
     def calculate_velocity_from_player(self):
