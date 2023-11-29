@@ -59,7 +59,13 @@ class Ball(GameObject):
 
             if(collision): # collision happens
                 self.position = pos
-                normal = normal_sdf(sdf, self.position)
+                normal = list(normal_sdf(sdf, self.position))
+                # just for that type of game limit amount of normals to avoid bugs
+                if abs(normal[0]) > abs(normal[1]):
+                    normal[1] = 0
+                else:
+                    normal[0] = 0
+                normal = normalize(normal)
                 if(nearestObject.tag == PLAYER_TAG):
                     if(normal[1] > 0):
                         self.calculate_velocity_from_player()
@@ -80,7 +86,7 @@ class Ball(GameObject):
             target_position = list(self.player.position)
             target_position[1] += 0.5
 
-            self.velocity = list(normalize([self.position[0] - target_position[0], 2]))
+            self.velocity = list(normalize([self.position[0] - target_position[0], 1]))
             self.velocity[0] *= self.speed
             self.velocity[1] *= self.speed
 
