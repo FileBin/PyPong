@@ -60,11 +60,22 @@ class Ball(GameObject):
             if(collision): # collision happens
                 self.position = pos
                 normal = list(normal_sdf(sdf, self.position))
+
                 # just for that type of game limit amount of normals to avoid bugs
-                if abs(normal[0]) > abs(normal[1]):
+                if all(abs(x) > 0.01 for x in normal):
+                    normals = [list(normal), list(normal)]
+                    normals[0][0] = 0
+                    normals[1][1] = 0
+                    normals = [normalize(x) for x in normals]
+                    if dot(normals[0], direction) < dot(normals[1], direction):
+                        normal = normals[0]
+                    else:
+                        normal = normals[1]
+                elif abs(normal[0]) > abs(normal[1]):
                     normal[1] = 0
                 else:
                     normal[0] = 0
+                
                 normal = normalize(normal)
                 if(nearestObject.tag == PLAYER_TAG):
                     if(normal[1] >= 0):
