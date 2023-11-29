@@ -98,7 +98,6 @@ class Ball(GameObject):
                 self.position = [x + y * 0.01 for x, y in zip(self.position, direction)]
                 step_distance -= 0.01
                 if(step_distance>0.01):
-                    print(step_distance)
                     move(step_distance)
 
             move(self.speed * dt)
