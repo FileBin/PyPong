@@ -67,7 +67,7 @@ class Ball(GameObject):
                     normal[0] = 0
                 normal = normalize(normal)
                 if(nearestObject.tag == PLAYER_TAG):
-                    if(normal[1] > 0):
+                    if(normal[1] >= 0):
                         self.calculate_velocity_from_player()
                 else:
                     if nearestObject.tag == OBSTACLE_TAG:

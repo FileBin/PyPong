@@ -18,7 +18,7 @@ def normalize(vec: vec2) -> vec2:
 def lerp(a: float, b: float, t: float) -> float:
     return (1 - t) * a + t * b
 
-def normal_sdf(sdf: sdf2d_func, p: vec2, eps=0.001) -> vec2:
+def normal_sdf(sdf: sdf2d_func, p: vec2, eps=0.01) -> vec2:
     return normalize([
             sdf(vec2(map(add, p, (eps, 0)))) - sdf(vec2(map(add, p, (-eps, 0)))),
             sdf(vec2(map(add, p, (0, eps)))) - sdf(vec2(map(add, p, (0, -eps)))),
