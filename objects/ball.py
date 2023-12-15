@@ -7,7 +7,11 @@ from config import *
 class Ball(GameObject):
     def __init__(self, scene, player: GameObject) -> None:
         super().__init__(scene)
-        self.speed = 16
+        if IMMORTABLE:
+            self.speed = 48
+        else:
+            self.speed = 16
+        
         self.velocity = [0,0]
         self.launched = False
         self.player = player
@@ -38,7 +42,7 @@ class Ball(GameObject):
             def sdf(p: vec2):
                 return sdf_o(p)[0]
             
-            def move(step_distance):
+            def move(step_distance, bounce):
                 pos = self.position
 
                 direction = normalize(self.velocity)
@@ -61,7 +65,8 @@ class Ball(GameObject):
                     step_distance = self.speed * dt
                     self.position = [x + y * step_distance for x, y in zip(self.position, direction)]
                     return
-                if(collision): # collision happens
+                
+                if collision: # collision happens
                     self.position = pos
                     normal = list(normal_sdf(sdf, self.position))
 
@@ -90,17 +95,18 @@ class Ball(GameObject):
                         elif nearestObject.tag == WORLDBORDER_TAG:
                             if(normal[1] > 0.5):
                                 # ball hit bottom wall
-                                from scenes.gamescene import GameScene 
-                                self.scene.engine.change_scene(GameScene())
+                                if not IMMORTABLE:
+                                    from scenes.gamescene import GameScene 
+                                    self.scene.engine.change_scene(GameScene())
+                                
                         if dot(self.velocity, normal) < 0:
                             self.velocity = list(reflect(self.velocity, normal))
                         direction = normalize(self.velocity)
                 self.position = [x + y * 0.01 for x, y in zip(self.position, direction)]
                 step_distance -= 0.01
-                if(step_distance>0.01):
-                    move(step_distance)
-
-            move(self.speed * dt)
+                if(step_distance>0.01 and bounce < 2):
+                    move(step_distance, bounce + 1)
+            move(self.speed * dt, 0)
               
 
     def calculate_velocity_from_player(self):

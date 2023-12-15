@@ -15,3 +15,5 @@ ACTION_POSITIVE=[pg.K_SPACE, pg.K_UP]
 PLAYER_TAG = 'player'
 WORLDBORDER_TAG = 'worldborder'
 OBSTACLE_TAG = 'obstacle'
+
+IMMORTABLE=True

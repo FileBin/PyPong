@@ -22,7 +22,7 @@ class PyPongEngine:
         self.clock=pg.time.Clock()
         
         done=False
-        while done==False:
+        while not done:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     done=True
@@ -56,6 +56,8 @@ class PyPongEngine:
                     windowpos = tuple(x - y/2 for x, y in zip(windowpos, windowscale)) 
                     drawrect=pg.Rect(windowpos, windowscale)
                     o.draw(self.screen, drawrect)
+        
+        self.active_scene.update()
 
     def change_scene(self, scene: Scene):
         self.scene_to_load = scene
