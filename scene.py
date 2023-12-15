@@ -11,6 +11,9 @@ class Scene:
         from pypongengine import PyPongEngine
         self.engine: PyPongEngine = engine
 
+    def update(self) -> None:
+        pass
+
     def point_worldspace_to_windowspace(self, screen: pg.Surface, point: vec2) -> tuple[int, int]:
         windowsize = screen.get_size()
         min_dim = min(windowsize)
