@@ -8,13 +8,15 @@ class GameObject:
         self.enable_collision = False
         self.position: vec2 = [0, 0]
         self.scale: vec2 = [1, 1]
-        self.drawcolor = pg.Color([0,0,0])
-        self.is_wireframe = False
         from scene import Scene
         self.scene : Scene = scene
+        self.tag = ''
 
     def update(self, dt: float) -> None:
         pass
+
+    def draw(self, surface: pg.Surface, rect: pg.Rect):
+        pg.draw.rect(surface=surface, color=pg.Color([0,0,0]), rect=rect)
 
     def sdf(self, point: vec2) -> float:
         pass
